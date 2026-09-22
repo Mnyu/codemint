@@ -1,8 +1,14 @@
 {
   "name": "codemint",
+  "version": "1.0.0",
   "module": "index.ts",
   "type": "module",
-  "private": true,
+  "bin": {
+    "codemint": "./index.ts"
+  },
+  "scripts": {
+    "build": "bun build ./index.ts --compile --outfile codemint"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
