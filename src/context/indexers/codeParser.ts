@@ -2,8 +2,8 @@ import path from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { z } from 'zod';
 import { log } from '../../observability/logger';
-import { getParser } from 'tree-sitter-languages';
 import type Parser from 'tree-sitter';
+import { getParser } from '../../lib/parser';
 
 // Maps file extension → tree-sitter language name
 // tree-sitter-languages bundles all these grammars, no extra installs needed.
@@ -28,7 +28,7 @@ const EXTENSION_TO_LANGUAGE = new Map<string, string>([
 
 // Text/config files have no meaningful AST — we chunk them by line count instead.
 const TEXT_EXTENSIONS = new Set(['.md', '.txt', '.yaml', '.yml', '.json', '.toml']);
-const ALL_EXTENSIONS = new Set([...Object.keys(EXTENSION_TO_LANGUAGE), ...TEXT_EXTENSIONS]);
+const ALL_EXTENSIONS = new Set([...EXTENSION_TO_LANGUAGE.keys(), ...TEXT_EXTENSIONS]);
 
 // Tree-sitter node type names that correspond to a named, indexable block.
 // These are consistent across languages — tree-sitter uses the same names where possible.
@@ -188,4 +188,4 @@ const walk = async (directory: string, skip: Set<string>, files: string[]) => {
   }
 };
 
-export { getSourceFiles, parseFile };
+export { getSourceFiles, parseFile, type ParsedChunk };
