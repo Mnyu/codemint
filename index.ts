@@ -1,5 +1,6 @@
 #!/usr/bin/env bun
 
+import { handleQuery } from './src/agent/orchestrator';
 import { config } from './src/config/config';
 import { getIndexer } from './src/context/indexers/factory';
 import { getEmbedder, getLLM } from './src/llm/factory';
@@ -47,7 +48,8 @@ const run = async () => {
       const question = userInput.slice(ASK.length).trim();
       log.info('Ask command received:', question);
       console.log(`Searching for: ${question}...`);
-      // TODO : Call retriever + LLM
+      const reply = await handleQuery(question);
+      console.log(reply);
     } else {
       log.warn('Unknown command received:', userInput);
       console.log(`Unknown command. Try:`);
