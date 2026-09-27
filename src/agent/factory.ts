@@ -1,4 +1,4 @@
-import { createAgent } from 'langchain';
+import { createAgent, DynamicStructuredTool } from 'langchain';
 import { getLLM } from '../llm/factory';
 import { log } from '../observability/logger';
 import { searchCodebase } from './tools';
@@ -9,9 +9,9 @@ const SYSTEM_PROMPT = `You are a senior software engineer with deep knowledge of
   Reference specific file names, function names and line numbers in your answers.
   If you cannot find the answer in the codebase, say so explicitly.`;
 
-const buildAgent = async () => {
+const buildAgent = async (mcpTools: DynamicStructuredTool[]) => {
   const llm = getLLM();
-  const tools = [searchCodebase];
+  const tools = [searchCodebase, ...mcpTools];
   const checkpointer = await getCheckpointer();
   log.info('Creating agent');
   return createAgent({
