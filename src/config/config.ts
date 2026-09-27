@@ -18,6 +18,11 @@ const ConfigSchema = z.object({
     url: z.string(),
     collection: z.string(),
   }),
+  memory: z.object({
+    dbPath: z.string(),
+    summarizeAtTokens: z.number(),
+    keepLastMessages: z.number(),
+  }),
 });
 
 type Config = z.infer<typeof ConfigSchema>;

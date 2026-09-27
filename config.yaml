@@ -14,6 +14,11 @@ qdrant:
   url: http://localhost:6333
   collection: codebase
 
+memory:
+  dbPath: .memory/memory.db
+  summarizeAtTokens: 4000
+  keepLastMessages: 20
+
 # chromadb:
 #   persist_dir: .chromadb/
 #   collection_name: codebase
